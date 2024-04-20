@@ -7,23 +7,18 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float speed;
     [SerializeField] private float jumpForce;
-
-    private Vector3 direction;
-    private Vector3 prevDirectoin;
     [SerializeField] Transform groundCheck;
     [SerializeField] float checkRadius;
     [SerializeField] LayerMask whatIsGround;
     [SerializeField] private GameObject canvas;
-    private PhotonView photonView;
-
-    // стрельба
     [SerializeField] float cooldown;
     [SerializeField] Transform shootPoint;
-  
+
+    private PhotonView photonView;
+    private Vector3 direction;
+    private Vector3 prevDirectoin;
     float timer;
-
-    Rigidbody2D rb;
-
+    private Rigidbody2D rb;
     bool isGrounded;
     bool isFacingRight = true;
 
@@ -35,14 +30,11 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        
+        if (photonView.IsMine == false)
+            return;
         float horizontal = Input.GetAxis("Horizontal");
         direction = new Vector3(horizontal, 0, 0);
         direction.Normalize();
-
-
-       
-
         if (horizontal > 0 )
         {
             isFacingRight = true;
@@ -78,9 +70,6 @@ public class PlayerController : MonoBehaviour
     {
         if (timer >= cooldown & Input.GetMouseButtonDown(0))
         {
-           
-            
-                // производим выстрел
                 var bullet = PhotonNetwork.Instantiate("Bullet", shootPoint.position, Quaternion.identity);
                 timer = 0;
                 var script = bullet.GetComponent<Bullet>();
@@ -107,11 +96,4 @@ public class PlayerController : MonoBehaviour
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround);
 
     }
-
-    private void Flip()
-    {
-      
-    }
-
-
 }

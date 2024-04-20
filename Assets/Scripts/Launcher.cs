@@ -9,7 +9,7 @@ public class Launcher : MonoBehaviourPunCallbacks
 {
     public TMP_InputField createInput;
     public TMP_InputField findInput;
-    void Start()
+    private void Start()
     {
         PhotonNetwork.ConnectUsingSettings();
         print("Conecting to server");
@@ -58,5 +58,9 @@ public class Launcher : MonoBehaviourPunCallbacks
     {
         print("вы подключились к комнате !");
         PhotonNetwork.LoadLevel(1);
+    }
+    public override void OnJoinRoomFailed(short returnCode, string message)
+    {
+        print("Не удается подключиться к комнате!");
     }
 }

@@ -24,7 +24,7 @@ public class RoomManager : MonoBehaviour
         {
             spawn = FindObjectOfType<PlayerSpawn>();
             int random = Random.Range(0, spawn.spawnPoinst.Length);
-            PhotonNetwork.Instantiate("Player", Vector3.zero, Quaternion.identity);
+            PhotonNetwork.Instantiate("PlayerManager", Vector3.zero, Quaternion.identity);
         }
     }
 
